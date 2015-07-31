@@ -1197,7 +1197,7 @@
 
             parseInputDate = function (inputDate) {
                 if (options.parseInputDate === undefined) {
-                    if (moment.ismoment.utc(inputDate) || inputDate instanceof Date) {
+                    if (moment.isMoment(inputDate) || inputDate instanceof Date) {
                         inputDate = moment.utc(inputDate);
                     } else {
                         inputDate = moment.utc(inputDate, parseFormats, options.useStrict);
@@ -1459,7 +1459,7 @@
                 return date.clone();
             }
 
-            if (newDate !== null && typeof newDate !== 'string' && !moment.ismoment.utc(newDate) && !(newDate instanceof Date)) {
+            if (newDate !== null && typeof newDate !== 'string' && !moment.isMoment(newDate) && !(newDate instanceof Date)) {
                 throw new TypeError('date() parameter must be one of [null, string, moment or Date]');
             }
 
@@ -2237,7 +2237,7 @@
                 return picker;
             }
 
-            if (typeof newDate !== 'string' && !moment.ismoment.utc(newDate) && !(newDate instanceof Date)) {
+            if (typeof newDate !== 'string' && !moment.isMoment(newDate) && !(newDate instanceof Date)) {
                 throw new TypeError('viewDate() parameter must be one of [string, moment or Date]');
             }
 
