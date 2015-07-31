@@ -58,7 +58,7 @@
 
     var dateTimePicker = function (element, options) {
         var picker = {},
-            date = moment().startOf('d'),
+            date = moment.utc().startOf('d'),
             viewDate = date.clone(),
             unset = true,
             input,
@@ -620,7 +620,7 @@
             updateDecades = function () {
                 var decadesView = widget.find('.datepicker-decades'),
                     decadesViewHeader = decadesView.find('th'),
-                    startDecade = viewDate.isBefore(moment({y: 1999})) ? moment({y: 1899}) : moment({y: 1999}),
+                    startDecade = viewDate.isBefore(moment.utc({y: 1999})) ? moment.utc({y: 1899}) : moment.utc({y: 1999}),
                     endDecade = startDecade.clone().add(100, 'y'),
                     html = '';
 
@@ -629,13 +629,13 @@
 
                 decadesView.find('.disabled').removeClass('disabled');
 
-                if (startDecade.isSame(moment({y: 1900})) || (options.minDate && options.minDate.isAfter(startDecade, 'y'))) {
+                if (startDecade.isSame(moment.utc({y: 1900})) || (options.minDate && options.minDate.isAfter(startDecade, 'y'))) {
                     decadesViewHeader.eq(0).addClass('disabled');
                 }
 
                 decadesViewHeader.eq(1).text(startDecade.year() + '-' + endDecade.year());
 
-                if (startDecade.isSame(moment({y: 2000})) || (options.maxDate && options.maxDate.isBefore(endDecade, 'y'))) {
+                if (startDecade.isSame(moment.utc({y: 2000})) || (options.maxDate && options.maxDate.isBefore(endDecade, 'y'))) {
                     decadesViewHeader.eq(2).addClass('disabled');
                 }
 
@@ -699,7 +699,7 @@
                     if (!isValid(currentDate, 'd')) {
                         clsName += ' disabled';
                     }
-                    if (currentDate.isSame(moment(), 'd')) {
+                    if (currentDate.isSame(moment.utc(), 'd')) {
                         clsName += ' today';
                     }
                     if (currentDate.day() === 0 || currentDate.day() === 6) {
@@ -1108,8 +1108,8 @@
                 clear: clear,
 
                 today: function () {
-                    if (isValid(moment(), 'd')) {
-                        setValue(moment());
+                    if (isValid(moment.utc(), 'd')) {
+                        setValue(moment.utc());
                     }
                 },
 
@@ -1151,7 +1151,7 @@
                 if (input.val() !== undefined && input.val().trim().length !== 0) {
                     setValue(parseInputDate(input.val().trim()));
                 } else if (options.useCurrent && unset && ((input.is('input') && input.val().trim().length === 0) || options.inline)) {
-                    currentMoment = moment();
+                    currentMoment = moment.utc();
                     if (typeof options.useCurrent === 'string') {
                         currentMoment = useCurrentGranularity[options.useCurrent](currentMoment);
                     }
@@ -1197,10 +1197,10 @@
 
             parseInputDate = function (inputDate) {
                 if (options.parseInputDate === undefined) {
-                    if (moment.isMoment(inputDate) || inputDate instanceof Date) {
-                        inputDate = moment(inputDate);
+                    if (moment.ismoment.utc(inputDate) || inputDate instanceof Date) {
+                        inputDate = moment.utc(inputDate);
                     } else {
-                        inputDate = moment(inputDate, parseFormats, options.useStrict);
+                        inputDate = moment.utc(inputDate, parseFormats, options.useStrict);
                     }
                 } else {
                     inputDate = options.parseInputDate(inputDate);
@@ -1459,7 +1459,7 @@
                 return date.clone();
             }
 
-            if (newDate !== null && typeof newDate !== 'string' && !moment.isMoment(newDate) && !(newDate instanceof Date)) {
+            if (newDate !== null && typeof newDate !== 'string' && !moment.ismoment.utc(newDate) && !(newDate instanceof Date)) {
                 throw new TypeError('date() parameter must be one of [null, string, moment or Date]');
             }
 
@@ -1622,7 +1622,7 @@
 
             if (typeof maxDate === 'string') {
                 if (maxDate === 'now' || maxDate === 'moment') {
-                    maxDate = moment();
+                    maxDate = moment.utc();
                 }
             }
 
@@ -1658,7 +1658,7 @@
 
             if (typeof minDate === 'string') {
                 if (minDate === 'now' || minDate === 'moment') {
-                    minDate = moment();
+                    minDate = moment.utc();
                 }
             }
 
@@ -1700,7 +1700,7 @@
 
             if (typeof defaultDate === 'string') {
                 if (defaultDate === 'now' || defaultDate === 'moment') {
-                    defaultDate = moment();
+                    defaultDate = moment.utc();
                 }
             }
 
@@ -2237,7 +2237,7 @@
                 return picker;
             }
 
-            if (typeof newDate !== 'string' && !moment.isMoment(newDate) && !(newDate instanceof Date)) {
+            if (typeof newDate !== 'string' && !moment.ismoment.utc(newDate) && !(newDate instanceof Date)) {
                 throw new TypeError('viewDate() parameter must be one of [string, moment or Date]');
             }
 
@@ -2376,7 +2376,7 @@
                 if (!widget) {
                     return;
                 }
-                var d = this.date() || moment();
+                var d = this.date() || moment.utc();
                 if (widget.find('.datepicker').is(':visible')) {
                     this.date(d.clone().subtract(7, 'd'));
                 } else {
@@ -2388,7 +2388,7 @@
                     this.show();
                     return;
                 }
-                var d = this.date() || moment();
+                var d = this.date() || moment.utc();
                 if (widget.find('.datepicker').is(':visible')) {
                     this.date(d.clone().add(7, 'd'));
                 } else {
@@ -2399,7 +2399,7 @@
                 if (!widget) {
                     return;
                 }
-                var d = this.date() || moment();
+                var d = this.date() || moment.utc();
                 if (widget.find('.datepicker').is(':visible')) {
                     this.date(d.clone().subtract(1, 'y'));
                 } else {
@@ -2410,7 +2410,7 @@
                 if (!widget) {
                     return;
                 }
-                var d = this.date() || moment();
+                var d = this.date() || moment.utc();
                 if (widget.find('.datepicker').is(':visible')) {
                     this.date(d.clone().add(1, 'y'));
                 } else {
@@ -2421,7 +2421,7 @@
                 if (!widget) {
                     return;
                 }
-                var d = this.date() || moment();
+                var d = this.date() || moment.utc();
                 if (widget.find('.datepicker').is(':visible')) {
                     this.date(d.clone().subtract(1, 'd'));
                 }
@@ -2430,7 +2430,7 @@
                 if (!widget) {
                     return;
                 }
-                var d = this.date() || moment();
+                var d = this.date() || moment.utc();
                 if (widget.find('.datepicker').is(':visible')) {
                     this.date(d.clone().add(1, 'd'));
                 }
@@ -2439,7 +2439,7 @@
                 if (!widget) {
                     return;
                 }
-                var d = this.date() || moment();
+                var d = this.date() || moment.utc();
                 if (widget.find('.datepicker').is(':visible')) {
                     this.date(d.clone().subtract(1, 'M'));
                 }
@@ -2448,7 +2448,7 @@
                 if (!widget) {
                     return;
                 }
-                var d = this.date() || moment();
+                var d = this.date() || moment.utc();
                 if (widget.find('.datepicker').is(':visible')) {
                     this.date(d.clone().add(1, 'M'));
                 }
@@ -2469,7 +2469,7 @@
                 }
             },
             t: function () {
-                this.date(moment());
+                this.date(moment.utc());
             },
             'delete': function () {
                 this.clear();
